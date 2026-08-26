@@ -1,0 +1,63 @@
+clc; clear; close all;
+
+% Time Intervals
+t = 1:10;
+
+% AI Prediction Accuracy
+Accuracy = 90:99;
+
+% Actual and Predicted Network Traffic (Mbps)
+Actual = [50 55 60 62 68 70 75 80 85 90];
+Predicted = [49 54 61 63 67 71 74 81 84 89];
+
+% Error Calculation
+SqError = (Actual - Predicted).^2;
+MSE = mean(SqError);
+
+% Network Performance
+Throughput = [120 135 150 165 180 195 210 225 240 255];
+Utilization = [60 65 70 74 78 82 86 90 94 98];
+
+% Display Results
+disp(['Mean Squared Error (MSE) = ',num2str(MSE)])
+
+disp(table(t',Accuracy',Actual',Predicted',SqError',Throughput',Utilization',...
+    'VariableNames',{'Time','Accuracy_percent','Actual_Mbps',...
+    'Predicted_Mbps','SquaredError','Throughput_Mbps',...
+    'Utilization_percent'}));
+
+% Graphs
+figure;
+
+% Plot 1 - AI Prediction Accuracy
+subplot(2,2,1)
+plot(t,Accuracy,'-o','LineWidth',2)
+title('AI Prediction Accuracy')
+xlabel('Time Interval')
+ylabel('Accuracy (%)')
+grid on
+
+% Plot 2 - Actual vs Predicted Traffic
+subplot(2,2,2)
+plot(t,Actual,'-o',t,Predicted,'-s','LineWidth',2)
+title('Actual vs Predicted Traffic')
+xlabel('Time Interval')
+ylabel('Traffic (Mbps)')
+legend('Actual','Predicted')
+grid on
+
+% Plot 3 - Prediction Error
+subplot(2,2,3)
+plot(t,SqError,'-o','LineWidth',2)
+title(['Prediction Error (MSE = ',num2str(MSE),')'])
+xlabel('Time Interval')
+ylabel('Squared Error')
+grid on
+
+% Plot 4 - Throughput and Utilization
+subplot(2,2,4)
+plot(Throughput,Utilization,'-s','LineWidth',2)
+title('Throughput vs Network Utilization')
+xlabel('Throughput (Mbps)')
+ylabel('Utilization (%)')
+grid on
