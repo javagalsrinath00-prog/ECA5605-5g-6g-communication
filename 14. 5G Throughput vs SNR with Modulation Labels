@@ -1,0 +1,61 @@
+clc; clear; close all;
+
+% SNR Values
+SNR = 0:5:30;
+
+% 1. Throughput Calculation
+MaxTP = 100;                                      % Maximum Throughput (Mbps)
+Throughput = MaxTP*(1-exp(-SNR/10));
+
+% 2. BER and Reliability
+BER = [0.30 0.18 0.10 0.05 0.02 0.008 0.001];
+Reliability = (1-BER)*100;
+
+% 3. Modulation Parameters
+Modulation = {'QPSK','16-QAM','64-QAM','256-QAM'};
+ReqSNR = [5 10 18 25];                           % Required SNR (dB)
+Efficiency = [2 4 6 8];                          % bits/s/Hz
+
+% Display Results
+disp('--- 5G Performance vs SNR ---')
+disp(table(SNR',Throughput',BER',Reliability',...
+    'VariableNames',{'SNR_dB','Throughput_Mbps','BER','Reliability_percent'}));
+
+disp('--- Modulation Performance ---')
+disp(table(Modulation',ReqSNR',Efficiency',...
+    'VariableNames',{'Modulation','Required_SNR_dB','Efficiency_bits_per_Hz'}));
+
+% Plots
+figure;
+
+% Plot 1 - Throughput
+subplot(2,2,1)
+plot(SNR,Throughput,'-o','LineWidth',2);
+title('5G Throughput vs SNR');
+xlabel('SNR (dB)');
+ylabel('Throughput (Mbps)');
+grid on;
+
+% Plot 2 - BER
+subplot(2,2,2)
+semilogy(SNR,BER,'-o','LineWidth',2);
+title('BER vs SNR');
+xlabel('SNR (dB)');
+ylabel('Bit Error Rate');
+grid on;
+
+% Plot 3 - Reliability
+subplot(2,2,3)
+plot(SNR,Reliability,'-s','LineWidth',2);
+title('Reliability vs SNR');
+xlabel('SNR (dB)');
+ylabel('Reliability (%)');
+grid on;
+
+% Plot 4 - Modulation Efficiency
+subplot(2,2,4)
+plot(ReqSNR,Efficiency,'-o','LineWidth',2);
+title('SNR vs Spectral Efficiency');
+xlabel('Required SNR (dB)');
+ylabel('Spectral Efficiency (bits/s/Hz)');
+grid on;
