@@ -1,0 +1,61 @@
+clc; clear; close all;
+
+% SNR values (dB)
+SNR = 0:5:30;
+
+% Throughput (Mbps)
+NB_Throughput = 0.05*(1-exp(-SNR/8));
+LTE_Throughput = 1.2*(1-exp(-SNR/8));
+
+% Latency (ms)
+NB_Latency  = [180 160 145 130 120 110 100];
+LTE_Latency = [90 80 70 60 50 45 40];
+
+% Packet Delivery Ratio (%)
+NB_PDR  = [82 86 89 92 95 97 99];
+LTE_PDR = [88 91 94 96 98 99 100];
+
+% Display Results
+disp(table(SNR',NB_Throughput',LTE_Throughput',NB_Latency',LTE_Latency',...
+    NB_PDR',LTE_PDR',...
+    'VariableNames',{'SNR_dB','NB_Throughput','LTEM_Throughput',...
+    'NB_Latency_ms','LTEM_Latency_ms','NB_PDR_%','LTEM_PDR_%'}));
+
+% Plots
+figure;
+
+% Plot 1 - Throughput
+subplot(2,2,1)
+plot(SNR,NB_Throughput,'-o',SNR,LTE_Throughput,'-s','LineWidth',2);
+title('Throughput vs SNR');
+xlabel('SNR (dB)');
+ylabel('Throughput (Mbps)');
+legend('NB-IoT','LTE-M','Location','southeast');
+grid on;
+
+% Plot 2 - Latency
+subplot(2,2,2)
+plot(SNR,NB_Latency,'-o',SNR,LTE_Latency,'-s','LineWidth',2);
+title('Latency vs SNR');
+xlabel('SNR (dB)');
+ylabel('Latency (ms)');
+legend('NB-IoT','LTE-M','Location','northeast');
+grid on;
+
+% Plot 3 - Packet Delivery Ratio
+subplot(2,2,3)
+plot(SNR,NB_PDR,'-o',SNR,LTE_PDR,'-s','LineWidth',2);
+title('Packet Delivery Ratio vs SNR');
+xlabel('SNR (dB)');
+ylabel('PDR (%)');
+legend('NB-IoT','LTE-M','Location','southeast');
+grid on;
+
+% Plot 4 - Throughput Comparison
+subplot(2,2,4)
+plot(NB_Throughput,NB_PDR,'-o',LTE_Throughput,LTE_PDR,'-s','LineWidth',2);
+title('Throughput vs Packet Delivery Ratio');
+xlabel('Throughput (Mbps)');
+ylabel('PDR (%)');
+legend('NB-IoT','LTE-M','Location','southeast');
+grid on;
