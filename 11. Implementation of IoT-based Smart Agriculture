@@ -1,0 +1,55 @@
+clc; clear; close all;
+
+% Smart Agriculture Parameters
+Time = 1:10;                                   % Time (hours)
+SoilMoisture = [30 35 28 25 20 18 22 30 40 45];
+Threshold = 40;                                % Moisture threshold (%)
+
+% Calculations
+SoilStatus = SoilMoisture >= Threshold;        % 1 = Wet, 0 = Dry
+PumpStatus = SoilMoisture < Threshold;         % 1 = Pump ON, 0 = Pump OFF
+Efficiency = (SoilMoisture/Threshold)*100;
+Efficiency(Efficiency > 100) = 100;
+
+% Display Results
+disp(table(Time',SoilMoisture',SoilStatus',PumpStatus',Efficiency',...
+    'VariableNames',{'Time_hr','Moisture_%','Wet_Status','Pump_ON','Efficiency_%'}));
+
+% Plots
+figure;
+
+% Plot 1 - Soil Moisture
+subplot(2,2,1)
+plot(Time,SoilMoisture,'-o','LineWidth',2);
+hold on;
+yline(Threshold,'r--','Threshold');
+title('Soil Moisture Variation');
+xlabel('Time (Hours)');
+ylabel('Soil Moisture (%)');
+grid on;
+
+% Plot 2 - Soil Status
+subplot(2,2,2)
+stem(Time,SoilStatus,'filled','LineWidth',2);
+title('Soil Condition');
+xlabel('Time (Hours)');
+ylabel('1 = Wet, 0 = Dry');
+ylim([-0.2 1.2]);
+grid on;
+
+% Plot 3 - Pump Status
+subplot(2,2,3)
+stem(Time,PumpStatus,'filled','LineWidth',2);
+title('Water Pump Status');
+xlabel('Time (Hours)');
+ylabel('1 = ON, 0 = OFF');
+ylim([-0.2 1.2]);
+grid on;
+
+% Plot 4 - Irrigation Efficiency
+subplot(2,2,4)
+plot(Time,Efficiency,'-s','LineWidth',2);
+title('Irrigation Efficiency');
+xlabel('Time (Hours)');
+ylabel('Efficiency (%)');
+grid on;
