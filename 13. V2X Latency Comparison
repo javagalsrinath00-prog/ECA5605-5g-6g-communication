@@ -1,0 +1,49 @@
+clc; clear; close all;
+
+% Vehicle Parameters
+Vehicle = 1:6;
+Speed = [20 40 60 80 100 120];      % km/h
+
+% Performance Metrics
+Latency = [18 16 14 12 10 9];        % ms
+PDR = [99 98 97 95 93 90];           % %
+Range = [280 260 240 220 200 180];  % m
+
+% Display Results
+disp(table(Vehicle',Speed',Latency',PDR',Range',...
+    'VariableNames',{'Vehicle','Speed_kmph','Latency_ms','PDR_%','Range_m'}));
+
+% Plots
+figure;
+
+% Plot 1 - Speed vs Latency
+subplot(2,2,1)
+plot(Speed,Latency,'-o','LineWidth',2);
+title('Vehicle Speed vs Latency');
+xlabel('Speed (km/h)');
+ylabel('Latency (ms)');
+grid on;
+
+% Plot 2 - Speed vs Packet Delivery Ratio
+subplot(2,2,2)
+plot(Speed,PDR,'-s','LineWidth',2);
+title('Vehicle Speed vs Packet Delivery Ratio');
+xlabel('Speed (km/h)');
+ylabel('PDR (%)');
+grid on;
+
+% Plot 3 - Speed vs Communication Range
+subplot(2,2,3)
+plot(Speed,Range,'-d','LineWidth',2);
+title('Vehicle Speed vs Communication Range');
+xlabel('Speed (km/h)');
+ylabel('Range (m)');
+grid on;
+
+% Plot 4 - Latency vs Packet Delivery Ratio
+subplot(2,2,4)
+plot(Latency,PDR,'-*','LineWidth',2);
+title('Latency vs Packet Delivery Ratio');
+xlabel('Latency (ms)');
+ylabel('PDR (%)');
+grid on;
